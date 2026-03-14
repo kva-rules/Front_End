@@ -1,0 +1,71 @@
+
+cat > src/features/notificatF'
+impoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpoimpo seimpoimpoimpoimpoimpoimpoimpoimpoimpoimp = 'failed'
+    },
+  },
+})
+
+export const { setUsers, setSelectedUser, setUsersError } = userSlice.actions
+export default userSlice.reducer
+EOF
+
+cat > src/features/auth/authSlice.js <<'EOF'
+import { createSlice } from '@reduxjs/toolkit'
+
+const initialState = {
+  token: null,
+  user: null,
+  status: 'idle',
+  error: null,
+}
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    loginStart(state) {
+      state.status = 'loading'
+      state.error = null
+    },
+    loginSuccess(state, action) {
+      state.status = 'succeeded'
+      state.token = action.payload.token
+      state.user = action.payload.user
+    },
+    loginFailed(state, action) {
+      state.status = 'failed'
+      state.error = action.payload
+    },
+    logout(state) {
+      state.token = null
+      state.user = null
+      state.status = 'idle'
+      state.error = null
+    },
+  },
+})
+
+export const { loginStart, loginSuccess, loginFailed, logout } = authSlice.actions
+export default authSlice.reducer
+EOF
+
+cat > src/app/store.js <<'EOF'
+import { configureStore } from '@reduxjs/toolkit'
+import authReducer from '../features/auth/authSlice'
+import ticketReducer from '../features/tickets/ticketSlice'
+import notificationReducer from '../features/notifications/notificationSlice'
+import leaderboardReducer from '../features/leaderboard/leaderboardSlice'
+import userReducer from '../features/users/userSlice'
+
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    tickets: ticketReducer,
+    notifications: notificationReducer,
+    leaderboard: leaderboardReducer,
+    users: userReducer,
+  },
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+})
+EOF
