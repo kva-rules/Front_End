@@ -24,7 +24,8 @@ export const isTokenExpired = () => Date.now() >= getExpiresAt()
 
 export const login = async (payload) => {
   // Static fallback login for local dev
-  if (payload.username === 'mellwyn' && payload.password === '123') {
+  const loginEmail = payload.email || payload.username
+  if (loginEmail === 'mellwyn' && payload.password === '123') {
     const accessToken = 'static-local-token'
     const refreshToken = 'static-local-refresh'
     const expiresIn = 3600
@@ -35,13 +36,13 @@ export const login = async (payload) => {
         refreshToken,
         expiresIn,
         userId: '1',
-        user: { id: '1', username: 'mellwyn', role: 'USER' },
+        user: { id: '1', email: 'mellwyn', role: 'USER' },
       },
     }
     return mockResponse
   }
 
-  if (payload.username === 'admin' && payload.password === '123') {
+  if (loginEmail === 'admin' && payload.password === '123') {
     const accessToken = 'static-admin-token'
     const refreshToken = 'static-admin-refresh'
     const expiresIn = 3600
@@ -52,7 +53,7 @@ export const login = async (payload) => {
         refreshToken,
         expiresIn,
         userId: '99',
-        user: { id: '99', username: 'admin', role: 'ADMIN' },
+        user: { id: '99', email: 'admin', role: 'ADMIN' },
       },
     }
     return mockResponse

@@ -14,6 +14,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import PeopleIcon from '@mui/icons-material/People'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import CategoryIcon from '@mui/icons-material/Category'
 
 const menuItems = [
   { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
@@ -23,6 +24,7 @@ const menuItems = [
   { label: 'Leaderboard', icon: LeaderboardIcon, path: '/leaderboard' },
   { label: 'Notifications', icon: NotificationsIcon, path: '/notifications' },
   { label: 'Users', icon: PeopleIcon, path: '/users' },
+  { label: 'Categories', icon: CategoryIcon, path: '/admin/categories' },
   { label: 'Admin', icon: AdminPanelSettingsIcon, path: '/admin' },
 ]
 

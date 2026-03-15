@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import { useThemeToggle } from '../../providers/ThemeProvider'
+import { NotificationBell } from '../NotificationBell'
 
 export function Navbar({ onMenuClick }) {
   const { toggleTheme, mode } = useThemeToggle()
@@ -19,6 +20,7 @@ export function Navbar({ onMenuClick }) {
         <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
           Knowledge Collaboration Platform
         </Typography>
+        <NotificationBell />
         <IconButton color='inherit' onClick={toggleTheme}>
           {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
         </IconButton>

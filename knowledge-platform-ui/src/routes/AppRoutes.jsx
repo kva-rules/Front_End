@@ -2,11 +2,21 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { LoginPage } from '../features/auth/LoginPage'
 import { DashboardPage } from '../features/dashboard/DashboardPage'
+import { TicketsPage } from '../features/tickets/TicketsPage'
+import { TicketDetailsPage } from '../features/tickets/TicketDetailsPage'
+import { CreateTicketPage } from '../features/tickets/CreateTicketPage'
+import { SolutionsPage } from '../features/solutions/SolutionsPage'
+import { SolutionSubmitPage } from '../features/solutions/SolutionSubmitPage'
+import { KnowledgePage } from '../features/knowledge/KnowledgePage'
+import { KnowledgeArticlePage } from '../features/knowledge/KnowledgeArticlePage'
+import { LeaderboardPage } from '../features/leaderboard/LeaderboardPage'
+import { NotificationsPage } from '../features/notifications/NotificationsPage'
+import { ProfilePage } from '../features/profile/ProfilePage'
+import { AdminPage } from '../features/admin/AdminPage'
+import { UsersPage } from '../features/users/UsersPage'
+import { CategoryManagementPage } from '../features/admin/CategoryManagementPage'
 import { Layout } from '../components/layout/Layout'
 
-function Dummy({ label }) {
-  return <div>{label}</div>
-}
 
 function RequireAuth({ children }) {
   const { token, loading } = useAuth()
@@ -34,28 +44,40 @@ export default function AppRoutes() {
             <Layout>
               <Routes>
                 <Route path="dashboard" element={<DashboardPage />} />
-                <Route path="tickets" element={<Dummy label="Tickets" />} />
-                <Route path="solutions" element={<Dummy label="Solutions" />} />
-                <Route path="knowledgebase" element={<Dummy label="Knowledge Base" />} />
-                <Route path="leaderboard" element={<Dummy label="Leaderboard" />} />
-                <Route path="notifications" element={<Dummy label="Notifications" />} />
-                <Route
-                  path="users"
-                  element={
-                    <RequireRole roles={["ADMIN"]}>
-                      <Dummy label="Users" />
-                    </RequireRole>
-                  }
-                />
+                <Route path="tickets" element={<TicketsPage />} />
+                <Route path="tickets/:id" element={<TicketDetailsPage />} />
+                <Route path="create-ticket" element={<CreateTicketPage />} />
+                <Route path="solutions" element={<SolutionsPage />} />
+                <Route path="solutions/new" element={<SolutionSubmitPage />} />
+                <Route path="knowledge" element={<KnowledgePage />} />
+                <Route path="knowledge/:id" element={<KnowledgeArticlePage />} />
+                <Route path="leaderboard" element={<LeaderboardPage />} />
+                <Route path="notifications" element={<NotificationsPage />} />
+                <Route path="profile" element={<ProfilePage />} />
                 <Route
                   path="admin"
                   element={
                     <RequireRole roles={["ADMIN"]}>
-                      <Dummy label="Admin" />
+                      <AdminPage />
                     </RequireRole>
                   }
                 />
-                <Route path="profile" element={<Dummy label="Profile" />} />
+                <Route
+                  path="admin/categories"
+                  element={
+                    <RequireRole roles={["ADMIN"]}>
+                      <CategoryManagementPage />
+                    </RequireRole>
+                  }
+                />
+                <Route
+                  path="users"
+                  element={
+                    <RequireRole roles={["ADMIN"]}>
+                      <UsersPage />
+                    </RequireRole>
+                  }
+                />
                 <Route path="" element={<Navigate to="dashboard" replace />} />
               </Routes>
             </Layout>

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as authService from '../services/authService'
+import { initNotificationSocket, closeNotificationSocket } from '../services/notificationSocket'
 
 const AuthContext = createContext(null)
 
@@ -89,6 +90,20 @@ export const AuthProvider = ({ children }) => {
       if (savedUserId) {
         fetchUser(savedUserId)
       }
+    }
+
+    const socket = initNotificationSocket({
+      onOpen: () => console.log('Notification socket connected'),
+      onMessage: (payload) => {
+        console.log('Notification event', payload)
+      },
+      onError: (err) => console.error('Notification socket error', err),
+      onClose: () => console.log('Notification socket disconnected'),
+    })
+
+    return () => {
+      socket?.close()
+      closeNotificationSocket()
     }
   }, [fetchUser, user])
 
