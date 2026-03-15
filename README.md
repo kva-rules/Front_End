@@ -208,4 +208,5 @@ docker run -p 80:80 -e VITE_API_BASE_URL=https://api.example.com/api knowledge-u
 
 ## 📄 License
 
-MIT © [Your Name/Org]
+MIT © Kva_rules
+
