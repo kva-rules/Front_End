@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import Drawer from '@mui/material/Drawer'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
@@ -5,6 +6,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
+import Toolbar from '@mui/material/Toolbar'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 import BuildIcon from '@mui/icons-material/Build'
@@ -20,7 +22,7 @@ const menuItems = [
   { label: 'Dashboard', icon: DashboardIcon, path: '/dashboard' },
   { label: 'Tickets', icon: ConfirmationNumberIcon, path: '/tickets' },
   { label: 'Solutions', icon: BuildIcon, path: '/solutions' },
-  { label: 'Knowledge Base', icon: BookIcon, path: '/knowledgebase' },
+  { label: 'Knowledge Base', icon: BookIcon, path: '/knowledge' },
   { label: 'Leaderboard', icon: LeaderboardIcon, path: '/leaderboard' },
   { label: 'Notifications', icon: NotificationsIcon, path: '/notifications' },
   { label: 'Users', icon: PeopleIcon, path: '/users' },
@@ -28,14 +30,39 @@ const menuItems = [
   { label: 'Admin', icon: AdminPanelSettingsIcon, path: '/admin' },
 ]
 
-export function Sidebar({ open }) {
+export function Sidebar({ open, onClose, variant = 'permanent', drawerWidth = 250 }) {
   return (
-    <Drawer variant='permanent' open={open} sx={{ '& .MuiDrawer-paper': { width: 250, boxSizing: 'border-box' } }}>
+    <Drawer
+      variant={variant}
+      open={open}
+      onClose={onClose}
+      ModalProps={{ keepMounted: true }}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+        },
+      }}
+    >
+      <Toolbar />
       <List>
         {menuItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            <ListItemButton component='a' href={item.path}>
-              <ListItemIcon><item.icon /></ListItemIcon>
+            <ListItemButton
+              component={NavLink}
+              to={item.path}
+              onClick={onClose}
+              sx={{
+                '&.active': {
+                  backgroundColor: 'action.selected',
+                },
+              }}
+            >
+              <ListItemIcon>
+                <item.icon />
+              </ListItemIcon>
               <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
@@ -44,8 +71,19 @@ export function Sidebar({ open }) {
       <Divider />
       <List>
         <ListItem disablePadding>
-          <ListItemButton component='a' href='/profile'>
-            <ListItemIcon><AccountCircleIcon /></ListItemIcon>
+          <ListItemButton
+            component={NavLink}
+            to='/profile'
+            onClick={onClose}
+            sx={{
+              '&.active': {
+                backgroundColor: 'action.selected',
+              },
+            }}
+          >
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
             <ListItemText primary='Profile' />
           </ListItemButton>
         </ListItem>
