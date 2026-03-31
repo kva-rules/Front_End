@@ -1,210 +1,201 @@
-# Knowledge Platform UI
+# Knowledge Platform UI [![Tests](https://github.com/kva-rules/Front_End/actions/workflows/ci.yml/badge.svg)](https://github.com/kva-rules/Front_End/actions) [![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)](coverage/index.html)
 
 ## 🚀 Project Overview
 
-**Knowledge Platform UI** is a modern, responsive web application built with React 19 and Material-UI for a comprehensive knowledge management platform. It enables users to:
+**Knowledge Platform UI** is a modern, responsive single-page application (SPA) built with **React 19**, **Vite**, **Material-UI 7**, and **Redux Toolkit**. It provides a comprehensive interface for knowledge management, support ticketing, leaderboards, notifications, and admin functions.
 
-- Manage support **tickets** and submit/review **solutions**
-- Access a **knowledge base** with articles
-- View **leaderboards** and **notifications**
-- Handle **user profiles**, **admin functions** (users, categories)
-- Real-time notifications via WebSocket support
+### Key Features
 
-Key features include authentication (JWT), role-based access (Admin/User), global error handling, theming, and Redux state management for tickets, notifications, leaderboard, users, and auth.
-
-## 🏗️ Architecture
-
-- **Frontend**: Single Page Application (SPA)
-- **State Management**: Redux Toolkit (slices: auth, tickets, notifications, leaderboard, users)
-- **Routing**: React Router v7 with auth guards (`RequireAuth`, `RequireRole`)
-- **Styling**: Material-UI v7 + Emotion, CssBaseline, custom theme (`src/theme.js`)
-- **API Client**: Axios with interceptors (auth token, error handling)
-- **Providers Stack** (from root):
-  ```
-  GlobalErrorBoundary > Redux Provider > ThemeProvider > BrowserRouter > AuthContext > App (Routes)
-  ```
-- **Layout**: AppShell with Navbar, Sidebar, main content (`src/components/layout/`)
-- **Error Handling**: GlobalErrorBoundary + GlobalErrorNotifier + errorBus utils
-- **Contexts**: AuthContext (token/user/loading)
+- **Authentication & Authorization**: JWT-based login, role-based access (User/Admin)
+- **Ticket Management**: Create, view, detail, update/delete tickets
+- **Knowledge Base**: Browse articles, view details
+- **Solutions**: Submit solutions to tickets, admin approval
+- **Leaderboard**: View user rankings
+- **Notifications**: Real-time bell/list with WebSocket support
+- **Dashboard**: Overview metrics
+- **Profile**: User settings
+- **Admin**: Manage users, categories
+- **Global Error Handling**, Theming, Responsive Layout
 
 ## 📁 Folder Structure
 
 ```
 knowledge-platform-ui/
-├── public/                 # Static assets (favicon.svg, icons.svg)
+├── public/          # Static assets
 ├── src/
-│   ├── api/                # wsClient.js (WebSocket)
-│   ├── app/                # store.js (Redux config)
-│   ├── assets/             # Images (hero.png, react.svg, vite.svg)
-│   ├── components/         # Reusable (Loader, Modal, NotificationBell/List, PaginationControls, layout/AppShell/Navbar/Sidebar/Layout)
-│   ├── context/            # AuthContext.jsx
-│   ├── features/           # Domain features
-│   │   ├── auth/           # LoginPage.jsx, authSlice.js
-│   │   ├── dashboard/      # DashboardPage.jsx
-│   │   ├── knowledge/      # KnowledgePage.jsx, KnowledgeArticlePage.jsx
-│   │   ├── leaderboard/    # LeaderboardPage.jsx, leaderboardSlice.js
-│   │   ├── notifications/  # NotificationsPage.jsx, notificationSlice.js
-│   │   ├── profile/        # ProfilePage.jsx
-│   │   ├── solutions/      # SolutionsPage.jsx, SolutionSubmitPage.jsx
-│   │   ├── tickets/        # TicketsPage.jsx, TicketDetailsPage.jsx, CreateTicketPage.jsx, ticketSlice.js
-│   │   └── admin/          # AdminPage.jsx, CategoryManagementPage.jsx
-│   │       └── users/      # UsersPage.jsx, userSlice.js
-│   ├── providers/          # ThemeProvider.jsx
-│   ├── routes/             # AppRoutes.jsx
-│   ├── services/           # API layers (apiClient.js, authService.js, ticketService.js, etc.)
-│   ├── utils/              # jwt-utils.js, errorBus.js
-│   ├── constants.js
-│   ├── App.jsx, main.jsx
-│   └── index.css
-├── index.html
+│   ├── components/  # Reusable UI (Loader, Modal, Layout, Notifications...)
+│   ├── features/    # Pages & slices (auth, tickets, knowledge, admin...)
+│   ├── services/    # API wrappers (ticketService.js...)
+│   ├── utils/       # Helpers (jwt-utils.js)
+│   ├── store.js     # Redux config
+│   └── App.jsx
+├── Dockerfile       # Multi-stage Docker build
+├── nginx.conf       # Prod Nginx config
+├── jest.config.js   # Testing
 ├── package.json
-├── vite.config.js
-├── eslint.config.js
-└── README.md
+└── vite.config.js
 ```
 
 ## 🛠️ Technology Stack
 
-| Category       | Technologies                                                                |
-| -------------- | --------------------------------------------------------------------------- |
-| **Core**       | React 19.2.4, React DOM 19.2.4                                              |
-| **Build Tool** | Vite 5.4.8                                                                  |
-| **Routing**    | React Router DOM 7.13.1                                                     |
-| **State**      | @reduxjs/toolkit 2.11.2, react-redux 9.2.0                                  |
-| **UI Library** | @mui/material 7.3.9, @mui/icons-material 7.3.9, @emotion/react+styled 11.14 |
-| **HTTP**       | Axios 1.13.6                                                                |
-| **Auth Utils** | jwt-decode 4.0.0                                                            |
-| **Linting**    | ESLint 9.39.4 + React plugins                                               |
+| Category  | Tools                        |
+| --------- | ---------------------------- |
+| Framework | React 19, Vite 5             |
+| State     | Redux Toolkit 2, React-Redux |
+| UI        | MUI 7, Emotion               |
+| Routing   | React Router 7               |
+| HTTP      | Axios                        |
+| Testing   | Jest, RTL, Jest-DOM          |
+| Linting   | ESLint 9                     |
 
-## 🚀 Quick Setup
+## 🚀 Local Development & Build
 
 ### Prerequisites
 
-- **Node.js** ≥20
-- **Backend API** running at `http://localhost:8080/api`
+- Node.js ≥20
+- Backend API at `http://localhost:8080/api` (or set `VITE_API_BASE_URL`)
+
+### Setup & Run
 
 ```bash
 cd knowledge-platform-ui
 npm install
-npm run dev
+npm run dev  # http://localhost:5173
 ```
 
-**App runs at:** `http://localhost:5173`
+### Scripts
 
-Available scripts:
-
-- `npm run dev` - Development server
-- `npm run build` - Production build (`dist/`)
-- `npm run lint` - ESLint check
-- `npm run preview` - Preview production build
-
-## ⚙️ Environment Variables
-
-Currently hardcoded `API_BASE_URL = 'http://localhost:8080/api'` in `apiClient.js`.
-
-**Recommended `.env`** (add to `.gitignore`):
-
-```
-VITE_API_BASE_URL=https://your-api-gateway.com/api
+```bash
+npm run dev      # Dev server (HMR)
+npm run build    # Production build → dist/
+npm run preview  # Local prod preview
+npm run lint     # ESLint
+npm test         # Run tests
+npm run test:coverage  # Tests + coverage report
 ```
 
-Update `src/services/apiClient.js`:
-
-```javascript
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
-```
-
-## 🔌 API Gateway & Backend Integration
-
-**API Base**: `/api` (expects REST + JWT auth)
-
-**Core Endpoints**:
+**Env Vars** (`.env`):
 
 ```
-Auth: POST /auth/login {email, password}, POST /auth/logout
-Users: GET /users/me, GET /users, PUT /users/:id
-Tickets: GET/POST/PUT/DEL /tickets(:id)
-Knowledge: GET /knowledge(:id?), GET /knowledge/recent
-Solutions: POST /solutions, GET /solutions/ticket/:ticketId, PUT /solutions/:id/approve
-Notifications: GET /notifications/users/:userId, PUT/DEL /notifications/:id
-Leaderboard: GET /rewards/leaderboard
-Categories: CRUD /categories(:id) (admin)
-Files: POST /files/upload (multipart)
+VITE_API_BASE_URL=http://localhost:8080/api
 ```
 
-**Auth Flow**: Login → JWT stored in context → Auto-refresh/interceptor adds `Authorization: Bearer <token>`
+## 🧪 Testing & Coverage
 
-**Real-time**: `wsClient.js` for notification socket (implement connection in `notificationSocket.js`)
-
-## ☁️ Deployment
-
-### 1. **Static Hosting** (Netlify/Vercel)
-
-```
-npm run build
-# Deploy 'dist/' folder
+```bash
+npm test                    # All tests (80% coverage threshold)
+npm run test:coverage       # Generate coverage/ folder
+open coverage/lcov-report/index.html  # View detailed HTML report
 ```
 
-Set `VITE_API_BASE_URL` in platform env vars.
+- **Config**: `jest.config.js` (jsdom, Babel, 80% thresholds)
+- Tests in `src/**/*.test.[jt]s?(x)`
 
-### 2. **Nginx Proxy** (API Gateway)
+## 🔧 Docker Setup & Build
 
-```nginx
-server {
-  listen 80;
-  root /path/to/dist;
-  index index.html;
-
-  location / {
-    try_files $uri $uri/ /index.html;
-  }
-
-  location /api/ {
-    proxy_pass http://backend:8080/api/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header Authorization $http_authorization;
-  }
-}
-```
-
-### 3. **Docker**
-
-```dockerfile
-FROM node:20-alpine AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=prod
-COPY . .
-RUN npm run build
-
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-```
-
-**Build & Run**:
+### Build Image
 
 ```bash
 docker build -t knowledge-ui .
-docker run -p 80:80 -e VITE_API_BASE_URL=https://api.example.com/api knowledge-ui
 ```
 
-## 🧪 Testing & Development
+**Dockerfile Highlights** (multi-stage):
 
-- **Error Simulation**: Uses `GlobalErrorBoundary`, test via devtools
-- **Redux DevTools**: Enabled in non-prod
-- **Lint**: `npm run lint`
-- **Responsive**: MUI handles mobile-first
+- Build: `node:20-alpine` → `npm ci` → `npm run build`
+- Runtime: `nginx:stable-alpine` → Copy `dist/` + `nginx.conf`
 
-## 🤝 Contributing
+### Run Container
 
-1. Fork repository
-2. `npm install && npm run lint`
-3. Create feature branch
-4. PR to `main`
+```bash
+docker run -p 80:80 knowledge-ui
+```
+
+### Docker Compose Example (with backend)
+
+```yaml
+version: "3.8"
+services:
+  ui:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_BASE_URL=http://backend:8080/api
+  backend:
+    image: your-backend:latest
+    ports:
+      - "8080:8080"
+```
+
+## ☁️ Environment Stages
+
+| Stage | API URL Example                   | Purpose                 |
+| ----- | --------------------------------- | ----------------------- |
+| INT   | `https://int-api.company.com/api` | Integration Testing     |
+| UAT   | `https://uat-api.company.com/api` | User Acceptance Testing |
+| PROD  | `https://api.company.com/api`     | Production              |
+
+Set `VITE_API_BASE_URL` accordingly during build/deploy.
+
+## 🔄 GitHub Actions Pipeline Explanation
+
+**Recommended `.github/workflows/ci.yml`**:
+
+```yaml
+name: CI/CD
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run test:coverage # if main branch
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci && npm run build
+```
+
+**Flow**:
+
+1. Lint & test on every push/PR
+2. Coverage report on main
+3. Build artifacts
+   Extend for Docker push, deployments to stages.
+
+## 🎯 Detailed Functionalities
+
+1. **Auth**: Login (email/password → JWT), auto-persist, guards (`RequireAuth`, `RequireRole=admin`)
+2. **Tickets**: List (paginated), Create (form + file upload), Details (solutions), CRUD
+3. **Knowledge Base**: List/search articles, Article details
+4. **Solutions**: List per ticket, Submit new, Admin approve/reject
+5. **Leaderboard**: Paginated user rankings (points)
+6. **Notifications**: Real-time bell (count/badge), List page, Mark read/delete, WebSocket
+7. **Dashboard**: Key metrics, charts overview
+8. **Profile**: View/edit user info
+9. **Admin**:
+   - Users: List, manage roles
+   - Categories: CRUD for knowledge/tickets
+10. **Layout**: Responsive Navbar/Sidebar, Theme toggle, Loader, Modals, Pagination, Global errors/notifications
+
+**Real-time**: WebSocket for notifications.
+**Error Handling**: Global boundary + notifier.
+**File Upload**: Multipart to `/files/upload`.
+
+## 🤝 Contributing & Deployment
+
+- Fork → `npm i && npm test`
+- Branch `feat/xxx`
+- PR to main
+
+**Deploy Options**: Netlify/Vercel (static), Docker/K8s, CDN.
 
 ## 📄 License
 
