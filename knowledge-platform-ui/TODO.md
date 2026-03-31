@@ -1,15 +1,8 @@
-# README Update Progress
+# GitHub Actions Workflow Improvement Plan
 
-## TODO
+## Steps:
 
-- [x] Update knowledge-platform-ui/README.md with comprehensive content
-- [x] Delete knowledge-platform-ui/README2.md
-- [x] Delete top-level README.md
-- [x] Commit and push changes
-- [x] Verify tests/coverage
-
-## Done
-
-- Updated single professional README.md with Docker, GHA, stages, tests/coverage, local run/build, detailed features
-- Deleted duplicates
-- Verified tests all passed
+- [x] Step 1: Create improved main.yml workflow file with caching, optimizations, and fixes.
+- [ ] Step 2: Commit and push changes to trigger workflow.
+- [ ] Step 3: Verify workflow runs in GitHub repo Actions tab.
+- [ ] Step 4: Test Docker builds locally if needed.
