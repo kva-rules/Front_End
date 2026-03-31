@@ -110,8 +110,14 @@ export function TicketsPage() {
             </Grid>
             <Grid item xs={6} md={2}>
               <FormControl fullWidth>
-                <InputLabel>Status</InputLabel>
-                <Select value={statusFilter} label="Status" onChange={(e) => setStatusFilter(e.target.value)}>
+                <InputLabel id="status-label">Status</InputLabel>
+                <Select
+                  labelId="status-label"
+                  id="status-select"
+                  value={statusFilter}
+                  label="Status"
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                >
                   <MenuItem value="">All</MenuItem>
                   {allStatuses.map((status) => (
                     <MenuItem key={status} value={status}>{status}</MenuItem>
@@ -121,8 +127,14 @@ export function TicketsPage() {
             </Grid>
             <Grid item xs={6} md={2}>
               <FormControl fullWidth>
-                <InputLabel>Difficulty</InputLabel>
-                <Select value={difficultyFilter} label="Difficulty" onChange={(e) => setDifficultyFilter(e.target.value)}>
+                <InputLabel id="difficulty-label">Difficulty</InputLabel>
+                <Select
+                  labelId="difficulty-label"
+                  id="difficulty-select"
+                  value={difficultyFilter}
+                  label="Difficulty"
+                  onChange={(e) => setDifficultyFilter(e.target.value)}
+                >
                   <MenuItem value="">All</MenuItem>
                   {allDifficulties.map((d) => (
                     <MenuItem key={d} value={d}>{d}</MenuItem>
@@ -132,8 +144,14 @@ export function TicketsPage() {
             </Grid>
             <Grid item xs={6} md={2}>
               <FormControl fullWidth>
-                <InputLabel>Category</InputLabel>
-                <Select value={categoryFilter} label="Category" onChange={(e) => setCategoryFilter(e.target.value)}>
+                <InputLabel id="category-label">Category</InputLabel>
+                <Select
+                  labelId="category-label"
+                  id="category-select"
+                  value={categoryFilter}
+                  label="Category"
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                >
                   <MenuItem value="">All</MenuItem>
                   {allCategories.map((cat) => (
                     <MenuItem key={cat} value={cat}>{cat}</MenuItem>
@@ -143,8 +161,14 @@ export function TicketsPage() {
             </Grid>
             <Grid item xs={6} md={2}>
               <FormControl fullWidth>
-                <InputLabel>Assigned Engineer</InputLabel>
-                <Select value={assignedFilter} label="Assigned Engineer" onChange={(e) => setAssignedFilter(e.target.value)}>
+                <InputLabel id="assigned-label">Assigned Engineer</InputLabel>
+                <Select
+                  labelId="assigned-label"
+                  id="assigned-select"
+                  value={assignedFilter}
+                  label="Assigned Engineer"
+                  onChange={(e) => setAssignedFilter(e.target.value)}
+                >
                   <MenuItem value="">All</MenuItem>
                   {allAssigned.map((a) => (
                     <MenuItem key={a} value={a}>{a}</MenuItem>

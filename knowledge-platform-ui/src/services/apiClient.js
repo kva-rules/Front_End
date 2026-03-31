@@ -1,7 +1,19 @@
 import axios from 'axios'
 import { publishGlobalError } from '../utils/errorBus'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+const getViteApiBaseUrl = () => {
+  if (typeof process !== 'undefined' && process.env?.VITE_API_BASE_URL) {
+    return process.env.VITE_API_BASE_URL
+  }
+
+  try {
+    return eval('import.meta.env.VITE_API_BASE_URL')
+  } catch {
+    return undefined
+  }
+}
+
+const API_BASE_URL = getViteApiBaseUrl() || 'http://localhost:8080/api'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
