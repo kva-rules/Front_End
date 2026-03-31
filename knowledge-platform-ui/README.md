@@ -72,6 +72,10 @@ npm run preview  # Local prod preview
 npm run lint     # ESLint
 npm test         # Run tests
 npm run test:coverage  # Tests + coverage report
+
+cd knowledge-platform-ui && npm run dev
+Ctrl + C --> to stop the dev
+
 ```
 
 **Env Vars** (`.env`):
